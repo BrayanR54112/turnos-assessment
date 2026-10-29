@@ -1,1 +1,42 @@
-<p>asesor works!</p>
+<!-- Turno que se está atendiendo y botón para llamar al siguiente -->
+<section class="card actual">
+  <p class="etiqueta">Turno actual</p>
+  <p class="numero">{{ turnoActual ? turnoActual.numero : '-' }}</p>
+
+  <button class="btn" (click)="llamarSiguiente()" [disabled]="cargando || pendientes.length === 0">
+    Llamar siguiente
+  </button>
+
+  @if (error) {
+    <p class="alerta">{{ error }}</p>
+  }
+</section>
+
+<!-- Fila de espera: solo PENDIENTES, los cancelados no aparecen aquí -->
+<section class="card">
+  <p class="etiqueta">Personas esperando: <strong>{{ pendientes.length }}</strong></p>
+
+  <ul class="fila">
+    @for (turno of pendientes; track turno.numero) {
+      <li>Turno {{ turno.numero }}</li>
+    } @empty {
+      <li class="vacia">No hay turnos en espera</li>
+    }
+  </ul>
+</section>
+
+<!-- Cancelados: se muestran tachados en rojo para que el asesor sepa que no debe llamarlos -->
+<section class="card">
+  <p class="etiqueta">Cancelados por el cliente: <strong class="rojo">{{ cancelados.length }}</strong></p>
+
+  <ul class="fila">
+    @for (turno of cancelados; track turno.numero) {
+      <li class="cancelado">
+        <span class="tachado">Turno {{ turno.numero }}</span>
+        <span class="chip rojo">CANCELADO</span>
+      </li>
+    } @empty {
+      <li class="vacia">Ningún turno cancelado</li>
+    }
+  </ul>
+</section>
