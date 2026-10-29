@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Tarjeta del turno actual */
+.actual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+.numero { margin: 0; font-size: 72px; font-weight: 800; line-height: 1; color: var(--morado); }
+
+/* Lista de turnos en espera */
+.fila { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.fila li { padding: 10px 12px; border: 1px solid var(--borde); border-radius: 8px; font-size: 14px; }
+.fila li:first-child { background: var(--morado-claro); border-color: var(--morado-borde); font-weight: 600; }
+.fila li.vacia { text-align: center; color: var(--gris); background: none; font-weight: 400; }
+
+/* Turnos cancelados: fondo rojo claro y número tachado */
+.rojo { color: var(--rojo); }
+.fila li.cancelado,
+.fila li.cancelado:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--rojo-claro);
+  border-color: #f5c2c2;
+  font-weight: 400;
+}
+.tachado { text-decoration: line-through; color: var(--rojo); }

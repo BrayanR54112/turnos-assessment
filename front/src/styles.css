@@ -1,1 +1,100 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --morado: #7c3aed;
+  --morado-oscuro: #6d28d9;
+  --morado-claro: #f3eefe;
+  --morado-borde: #e4d8fd;
+  --texto: #1e1b2e;
+  --gris: #6b7280;
+  --gris-claro: #f5f6f8;
+  --borde: #e8e8ef;
+  --verde: #16a34a;
+  --verde-claro: #e9f9ef;
+  --rojo: #dc2626;
+  --rojo-claro: #fdeeee;
+  --sombra: 0 1px 3px rgba(30, 27, 46, 0.06), 0 4px 16px rgba(30, 27, 46, 0.04);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: var(--gris-claro);
+  color: var(--texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: var(--sombra);
+}
+
+.etiqueta {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gris);
+  margin: 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--morado-claro);
+  color: var(--morado);
+}
+.chip.verde { background: var(--verde-claro); color: var(--verde); }
+.chip.rojo { background: var(--rojo-claro); color: var(--rojo); }
+.punto { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--morado);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.28);
+  transition: background 0.15s, transform 0.1s;
+}
+.btn:hover:not(:disabled) { background: var(--morado-oscuro); }
+.btn:active:not(:disabled) { transform: translateY(1px); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+.btn.peligro {
+  width: auto;
+  background: #fff;
+  color: var(--rojo);
+  border: 1px solid #f5c2c2;
+  box-shadow: none;
+  font-size: 13px;
+  padding: 10px 16px;
+}
+.btn.peligro:hover:not(:disabled) { background: var(--rojo-claro); }
+
+.alerta {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--rojo-claro);
+  color: var(--rojo);
+}
+.alerta.ok { background: var(--verde-claro); color: var(--verde); }

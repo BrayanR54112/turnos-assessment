@@ -1,1 +1,89 @@
-<p>pedir-turno works!</p>
+<!-- Caso 1: el cliente YA tiene un turno activo -->
+@if (miTurno) {
+  <!-- Cabecera con el estado del turno -->
+  <section class="card cabecera">
+    <div class="titulo">
+      <div>
+        <p class="etiqueta">Sede central · Trámites generales</p>
+        <h1>Mi turno activo</h1>
+      </div>
+    </div>
+    @if (personasAntes === 0) {
+      <span class="chip verde"><span class="punto"></span>Eres el siguiente</span>
+    } @else {
+      <span class="chip"><span class="punto"></span>En espera</span>
+    }
+  </section>
+
+  <!-- Número del turno y barra de progreso -->
+  <section class="card principal">
+    <span class="chip">TU NÚMERO ASIGNADO</span>
+    <p class="subtitulo">Tu turno:</p>
+    <p class="numero">{{ miTurno.numero }}</p>
+
+    <div class="progreso-caja">
+      <div class="barra"><div class="relleno" [style.width.%]="progreso"></div></div>
+      <p>
+        @if (personasAntes === null) {
+          Consultando la fila...
+        } @else if (personasAntes === 0) {
+          <strong>¡Prepárate, eres el siguiente!</strong>
+        } @else {
+          Faltan <strong>{{ personasAntes }}</strong> {{ personasAntes === 1 ? 'persona' : 'personas' }} antes que tú
+        }
+      </p>
+    </div>
+
+    <p class="aviso">Esta pantalla se actualiza sola. Te avisaremos aquí cuando sea tu turno.</p>
+  </section>
+
+  <!-- Tarjetas informativas: fila, tiempo estimado y ayuda para cancelar -->
+  <section class="grid-3">
+    <div class="card info">
+      <p class="etiqueta">Fila actual</p>
+      <p class="valor">{{ personasAntes ?? '–' }}</p>
+      <p class="detalle">personas antes que tú</p>
+    </div>
+    <div class="card info">
+      <p class="etiqueta">Tiempo estimado</p>
+      <p class="valor">{{ minutosEstimados !== null ? '~' + minutosEstimados + ' min' : '–' }}</p>
+      <p class="detalle">
+        @if (promedioMinutos !== null) {
+          promedio de {{ promedioMinutos }} min por persona
+        } @else {
+          calculando promedio...
+        }
+      </p>
+    </div>
+    <div class="card info">
+      <p class="etiqueta">¿Ya no puedes esperar?</p>
+      <p class="detalle">Cancela tu turno para que el asesor no te llame y la fila avance más rápido.</p>
+    </div>
+  </section>
+
+  @if (error) {
+    <p class="alerta">{{ error }}</p>
+  }
+
+  <!-- Cancelar: el turno pasa a CANCELADO y el asesor ya no lo llamará -->
+  <div class="acciones">
+    <button class="btn peligro" (click)="cancelarTurno()" [disabled]="cargando">Cancelar turno o salir</button>
+  </div>
+} @else {
+  <!-- Caso 2: el cliente todavía no tiene turno (o su turno ya terminó) -->
+  <section class="card principal inicio">
+    <h1>Pide tu turno sin hacer fila</h1>
+    <p class="detalle">Recibe tu número al instante y sigue desde tu celular cuánto falta para que te atiendan.</p>
+
+    @if (mensaje) {
+      <p class="alerta ok">{{ mensaje }}</p>
+    }
+    @if (error) {
+      <p class="alerta">{{ error }}</p>
+    }
+
+    <button class="btn" (click)="pedirTurno()" [disabled]="cargando">
+      {{ cargando ? 'Solicitando...' : 'Pedir turno' }}
+    </button>
+  </section>
+}
