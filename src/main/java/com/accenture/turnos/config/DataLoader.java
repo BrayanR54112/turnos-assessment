@@ -5,9 +5,11 @@ import com.accenture.turnos.repository.TurnoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 @Configuration
 public class DataLoader {
@@ -17,8 +19,10 @@ public class DataLoader {
         return args -> {
             // Solo carga si la base de datos está vacía
             if (turnoRepository.count() == 0) {
-                String archivo = "turnos_hoy.csv";
-                try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+                // Se lee desde el classpath (src/main/resources) para no depender del directorio de arranque
+                ClassPathResource archivo = new ClassPathResource("data/turnos_hoy.csv");
+                try (BufferedReader br = new BufferedReader(
+                        new InputStreamReader(archivo.getInputStream(), StandardCharsets.UTF_8))) {
                     String linea;
                     boolean esPrimeraLinea = true;
 
